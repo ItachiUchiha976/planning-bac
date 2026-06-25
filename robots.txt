@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://itachiuchiha976.github.io/planning-bac/sitemap.xml

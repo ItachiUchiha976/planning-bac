@@ -1,0 +1,1178 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Planificateur Révisions BAC 2027 — Génère ton Planning Gratuit en 2 min</title>
+  <meta name="description" content="Crée ton planning de révisions personnalisé pour le BAC 2027 gratuitement. En 2 minutes : ajoute tes matières, indique tes points faibles, génère ton programme complet. Sans inscription.">
+  <meta name="keywords" content="planning révisions bac 2027, planning révisions terminale, organiser révisions bac, rétroplanification bac, emploi du temps révisions bac, programme révisions terminale 2027">
+  <meta name="author" content="PlanBac">
+  <link rel="canonical" href="https://itachiuchiha976.github.io/planning-bac/">
+  <meta property="og:title" content="Planificateur Révisions BAC 2027 — Gratuit et Personnalisé">
+  <meta property="og:description" content="Génère ton planning de révisions BAC personnalisé en 2 minutes. Répartition automatique selon tes points faibles.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://itachiuchiha976.github.io/planning-bac/">
+  <meta property="og:image" content="https://itachiuchiha976.github.io/planning-bac/og.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Planificateur Révisions BAC 2027 — Gratuit">
+  <meta name="twitter:description" content="Génère ton planning de révisions BAC personnalisé en 2 minutes.">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Planificateur de Révisions BAC 2027",
+    "description": "Outil gratuit pour générer un planning de révisions personnalisé pour le BAC 2027 en terminale générale",
+    "url": "https://itachiuchiha976.github.io/planning-bac/",
+    "applicationCategory": "EducationApplication",
+    "operatingSystem": "Any",
+    "inLanguage": "fr",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" },
+    "featureList": ["Génération de planning personnalisé", "Répartition par phases", "Impression du planning", "Sans inscription"],
+    "audience": { "@type": "EducationalAudience", "educationalRole": "student" }
+  }
+  </script>
+  <style>
+    /* ===== VARIABLES ===== */
+    :root {
+      --primary: #6366F1;
+      --primary-dark: #4F46E5;
+      --primary-light: #EEF2FF;
+      --accent: #F59E0B;
+      --accent-light: #FEF3C7;
+      --green: #10B981;
+      --blue: #3B82F6;
+      --orange: #F97316;
+      --red: #EF4444;
+      --text: #1E1B4B;
+      --text-muted: #6B7280;
+      --bg: #F5F3FF;
+      --white: #FFFFFF;
+      --border: #DDD6FE;
+      --card-shadow: 0 2px 16px rgba(99,102,241,0.09);
+      --radius: 16px;
+      --radius-sm: 10px;
+      --radius-xs: 6px;
+      --font: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    }
+
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+    img { max-width: 100%; }
+    button { cursor: pointer; font-family: var(--font); }
+    input, select { font-family: var(--font); }
+    a { color: var(--primary); }
+    a:hover { text-decoration: underline; }
+
+    /* ===== LAYOUT ===== */
+    .container { max-width: 760px; margin: 0 auto; padding: 0 16px; }
+
+    /* ===== HEADER ===== */
+    header {
+      background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%);
+      color: white;
+      padding: 36px 16px 48px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    header::before {
+      content: '';
+      position: absolute;
+      top: -40%; left: -10%;
+      width: 120%; height: 200%;
+      background: radial-gradient(ellipse at 70% 50%, rgba(255,255,255,0.08) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .header-badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.18);
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 20px;
+      padding: 4px 14px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    header h1 {
+      font-size: clamp(1.6rem, 5vw, 2.4rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 10px;
+      line-height: 1.2;
+    }
+    header p {
+      font-size: 1rem;
+      opacity: 0.88;
+      max-width: 480px;
+      margin: 0 auto 24px;
+    }
+    .header-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+    }
+    .header-pill {
+      background: rgba(255,255,255,0.15);
+      border-radius: 20px;
+      padding: 4px 12px;
+      font-size: 0.82rem;
+      font-weight: 500;
+    }
+
+    /* ===== COUNTDOWN ===== */
+    .countdown-wrap {
+      background: white;
+      border: 2px solid var(--primary-light);
+      border-radius: var(--radius);
+      padding: 20px;
+      margin: -24px auto 28px;
+      max-width: 500px;
+      text-align: center;
+      box-shadow: var(--card-shadow);
+      position: relative;
+      z-index: 2;
+    }
+    .countdown-label { font-size: 0.82rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 10px; }
+    .countdown-blocks {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .countdown-block {
+      background: var(--primary-light);
+      border-radius: var(--radius-sm);
+      padding: 10px 16px;
+      min-width: 70px;
+    }
+    .countdown-num {
+      display: block;
+      font-size: 1.9rem;
+      font-weight: 800;
+      color: var(--primary);
+      line-height: 1;
+    }
+    .countdown-unit { font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
+    .countdown-date { font-size: 0.8rem; color: var(--text-muted); margin-top: 10px; }
+
+    /* ===== MAIN SECTIONS ===== */
+    main { padding: 0 0 60px; }
+
+    /* ===== CARD ===== */
+    .card {
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--card-shadow);
+      padding: 24px;
+      margin-bottom: 20px;
+    }
+
+    /* ===== STEP HEADER ===== */
+    .step-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+    .step-num {
+      background: var(--primary);
+      color: white;
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 0.9rem;
+      flex-shrink: 0;
+    }
+    .step-title { font-size: 1.1rem; font-weight: 700; color: var(--text); }
+    .step-hint { font-size: 0.82rem; color: var(--text-muted); margin-top: 2px; }
+
+    /* ===== DATE INPUT ===== */
+    .date-input-wrap { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+    .date-input {
+      border: 2px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 10px 14px;
+      font-size: 1rem;
+      color: var(--text);
+      background: white;
+      transition: border-color 0.2s;
+      flex: 1; min-width: 160px;
+    }
+    .date-input:focus { border-color: var(--primary); outline: none; }
+    .date-badge {
+      background: var(--accent-light);
+      border-radius: var(--radius-xs);
+      padding: 6px 12px;
+      font-size: 0.8rem;
+      color: #92400E;
+      font-weight: 500;
+    }
+
+    /* ===== QUICK ADD BUTTONS ===== */
+    .quick-add-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    .quick-btn {
+      border: 2px solid var(--border);
+      background: white;
+      color: var(--text);
+      border-radius: 20px;
+      padding: 6px 14px;
+      font-size: 0.84rem;
+      font-weight: 500;
+      transition: all 0.18s;
+    }
+    .quick-btn:hover { border-color: var(--primary); color: var(--primary); background: var(--primary-light); }
+    .quick-btn.added { background: var(--primary); border-color: var(--primary); color: white; cursor: default; }
+    .quick-section-label {
+      font-size: 0.78rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+      margin: 12px 0 6px;
+    }
+
+    /* ===== CUSTOM SUBJECT INPUT ===== */
+    .custom-add {
+      display: flex;
+      gap: 8px;
+      margin-top: 14px;
+    }
+    .custom-input {
+      flex: 1;
+      border: 2px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 9px 14px;
+      font-size: 0.9rem;
+      color: var(--text);
+      background: white;
+      transition: border-color 0.2s;
+    }
+    .custom-input:focus { border-color: var(--primary); outline: none; }
+    .add-btn {
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: var(--radius-sm);
+      padding: 9px 18px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      transition: background 0.18s;
+    }
+    .add-btn:hover { background: var(--primary-dark); }
+
+    /* ===== SUBJECT CARDS ===== */
+    #subjects-list { display: flex; flex-direction: column; gap: 10px; margin-top: 16px; }
+    .subject-card {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: #FAFAFA;
+      border-radius: var(--radius-sm);
+      padding: 12px 14px;
+      border-left: 4px solid var(--primary);
+      animation: fadeIn 0.2s ease;
+    }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); } }
+    .subject-dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .subject-name-label {
+      font-weight: 600;
+      font-size: 0.92rem;
+      flex: 1;
+      min-width: 80px;
+    }
+    .difficulty-label {
+      font-size: 0.76rem;
+      color: var(--text-muted);
+      margin-right: 4px;
+      white-space: nowrap;
+    }
+    .stars-wrap { display: flex; gap: 2px; }
+    .star {
+      font-size: 1.1rem;
+      color: #D1D5DB;
+      cursor: pointer;
+      transition: color 0.15s, transform 0.1s;
+      line-height: 1;
+    }
+    .star:hover { transform: scale(1.2); }
+    .star.filled { color: var(--accent); }
+    .remove-btn {
+      background: none;
+      border: none;
+      color: #9CA3AF;
+      font-size: 1.2rem;
+      line-height: 1;
+      padding: 2px 4px;
+      border-radius: 4px;
+      transition: color 0.15s;
+    }
+    .remove-btn:hover { color: var(--red); }
+    .no-subjects {
+      text-align: center;
+      padding: 20px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      border: 2px dashed var(--border);
+      border-radius: var(--radius-sm);
+    }
+
+    /* ===== HOURS GRID ===== */
+    .hours-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    .hours-item label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: var(--text);
+    }
+    .hours-item label span { font-size: 0.78rem; font-weight: 400; color: var(--text-muted); }
+    .hours-input {
+      width: 100%;
+      border: 2px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 9px 12px;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text);
+      text-align: center;
+      background: white;
+      transition: border-color 0.2s;
+    }
+    .hours-input:focus { border-color: var(--primary); outline: none; }
+    .hours-hint {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 10px;
+      background: var(--primary-light);
+      border-radius: var(--radius-xs);
+      padding: 8px 12px;
+    }
+
+    /* ===== GENERATE BUTTON ===== */
+    .generate-wrap { text-align: center; margin: 8px 0 0; }
+    .generate-btn {
+      background: linear-gradient(135deg, #4F46E5, #7C3AED);
+      color: white;
+      border: none;
+      border-radius: 30px;
+      padding: 16px 48px;
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+      box-shadow: 0 4px 20px rgba(99,102,241,0.35);
+      transition: transform 0.18s, box-shadow 0.18s;
+      width: 100%; max-width: 380px;
+    }
+    .generate-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 28px rgba(99,102,241,0.45);
+    }
+    .generate-btn:active { transform: translateY(0); }
+
+    /* ===== RESULTS ===== */
+    #results { display: none; }
+
+    .results-title {
+      text-align: center;
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--text);
+      margin: 36px 0 4px;
+    }
+    .results-subtitle {
+      text-align: center;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+    }
+
+    /* Stats row */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    @media (min-width: 480px) { .stats-row { grid-template-columns: repeat(4, 1fr); } }
+    .stat-card {
+      background: white;
+      border-radius: var(--radius-sm);
+      padding: 14px 10px;
+      text-align: center;
+      box-shadow: var(--card-shadow);
+    }
+    .stat-num { font-size: 1.6rem; font-weight: 800; color: var(--primary); line-height: 1; }
+    .stat-label { font-size: 0.75rem; color: var(--text-muted); margin-top: 3px; }
+
+    /* Subject allocation */
+    .alloc-title {
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+    .alloc-bar-wrap { margin-bottom: 10px; }
+    .alloc-bar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 4px;
+    }
+    .alloc-bar-name { font-size: 0.88rem; font-weight: 600; }
+    .alloc-bar-hours { font-size: 0.82rem; color: var(--text-muted); }
+    .alloc-track {
+      height: 8px;
+      background: #F3F4F6;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .alloc-fill {
+      height: 100%;
+      border-radius: 4px;
+      transition: width 0.6s ease;
+    }
+
+    /* Phase cards */
+    .phases-grid { display: flex; flex-direction: column; gap: 14px; }
+    .phase-card {
+      border-radius: var(--radius-sm);
+      padding: 16px 18px;
+      border-left: 5px solid;
+    }
+    .phase-card.p1 { background: #F0FDF4; border-color: var(--green); }
+    .phase-card.p2 { background: #EFF6FF; border-color: var(--blue); }
+    .phase-card.p3 { background: #FFF7ED; border-color: var(--orange); }
+    .phase-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 8px;
+    }
+    .phase-title { font-size: 1rem; font-weight: 700; }
+    .phase-title .phase-emoji { margin-right: 6px; }
+    .phase-meta {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .phase-chip {
+      font-size: 0.76rem;
+      font-weight: 600;
+      border-radius: 12px;
+      padding: 2px 10px;
+    }
+    .p1 .phase-chip { background: rgba(16,185,129,0.15); color: #065F46; }
+    .p2 .phase-chip { background: rgba(59,130,246,0.15); color: #1E3A8A; }
+    .p3 .phase-chip { background: rgba(249,115,22,0.15); color: #7C2D12; }
+    .phase-desc { font-size: 0.84rem; color: var(--text-muted); margin-bottom: 10px; }
+    .phase-dates { font-size: 0.8rem; font-weight: 600; color: var(--text-muted); margin-bottom: 10px; }
+    .phase-alloc-list { display: flex; flex-direction: column; gap: 4px; }
+    .phase-alloc-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.84rem;
+    }
+    .phase-alloc-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+    .phase-alloc-name { font-weight: 500; flex: 1; }
+    .phase-alloc-time { font-weight: 600; color: var(--text); }
+    .phase-alloc-sep { color: #D1D5DB; margin: 0 2px; }
+
+    /* Weekly tips */
+    .week-tips {
+      background: #F8F7FF;
+      border-radius: var(--radius-sm);
+      padding: 16px;
+    }
+    .week-tips h3 { font-size: 0.88rem; font-weight: 700; color: var(--primary); margin-bottom: 10px; }
+    .week-tip-item { display: flex; gap: 8px; font-size: 0.84rem; margin-bottom: 6px; align-items: flex-start; }
+    .week-tip-icon { font-size: 0.9rem; flex-shrink: 0; margin-top: 2px; }
+
+    /* Print button */
+    .print-wrap { text-align: center; margin: 20px 0 8px; }
+    .print-btn {
+      background: white;
+      color: var(--primary);
+      border: 2px solid var(--primary);
+      border-radius: 30px;
+      padding: 11px 32px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      transition: all 0.18s;
+    }
+    .print-btn:hover { background: var(--primary); color: white; }
+
+    /* ===== MATHS CTA ===== */
+    .maths-cta {
+      background: linear-gradient(135deg, #EEF2FF 0%, #F5F3FF 100%);
+      border: 2px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px 24px;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .maths-cta h2 { font-size: 1.2rem; font-weight: 800; margin-bottom: 8px; }
+    .maths-cta p { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 16px; max-width: 480px; margin-left: auto; margin-right: auto; }
+    .cta-links { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+    .cta-link-primary {
+      background: var(--primary);
+      color: white;
+      text-decoration: none;
+      border-radius: 20px;
+      padding: 10px 22px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      transition: background 0.18s;
+    }
+    .cta-link-primary:hover { background: var(--primary-dark); text-decoration: none; color: white; }
+    .cta-link-secondary {
+      background: white;
+      color: var(--primary);
+      text-decoration: none;
+      border: 2px solid var(--border);
+      border-radius: 20px;
+      padding: 10px 22px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      transition: all 0.18s;
+    }
+    .cta-link-secondary:hover { border-color: var(--primary); text-decoration: none; }
+
+    /* ===== FAQ ===== */
+    .faq-section h2 { font-size: 1.2rem; font-weight: 800; margin-bottom: 16px; }
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 0;
+    }
+    .faq-item:last-child { border-bottom: none; }
+    .faq-item summary {
+      padding: 14px 0;
+      font-size: 0.92rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      list-style: none;
+      gap: 10px;
+    }
+    .faq-item summary::-webkit-details-marker { display: none; }
+    .faq-item summary::after {
+      content: '+';
+      font-size: 1.2rem;
+      color: var(--primary);
+      flex-shrink: 0;
+      transition: transform 0.2s;
+    }
+    .faq-item[open] summary::after { transform: rotate(45deg); }
+    .faq-item p {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      padding-bottom: 14px;
+      line-height: 1.65;
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: var(--text);
+      color: rgba(255,255,255,0.65);
+      text-align: center;
+      padding: 28px 16px;
+      font-size: 0.82rem;
+    }
+    footer a { color: rgba(255,255,255,0.75); }
+
+    /* ===== PRINT ===== */
+    @media print {
+      header, #configurateur, .maths-cta, .faq-section, footer, .print-wrap, .countdown-wrap { display: none !important; }
+      #results { display: block !important; }
+      .results-title, .results-subtitle { display: block; }
+      body { background: white; }
+      .card { box-shadow: none; border: 1px solid #ddd; }
+      .phase-card { break-inside: avoid; }
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 480px) {
+      .hours-grid { grid-template-columns: 1fr 1fr; }
+      .card { padding: 18px 16px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header>
+  <div class="header-badge">Outil gratuit BAC 2027</div>
+  <h1>Planificateur de Révisions<br>BAC 2027</h1>
+  <p>Génère ton planning personnalisé en 2 minutes. Répartition intelligente selon tes matières et tes points faibles.</p>
+  <div class="header-pills">
+    <span class="header-pill">100% gratuit</span>
+    <span class="header-pill">Sans inscription</span>
+    <span class="header-pill">Imprimable</span>
+    <span class="header-pill">Mobile-friendly</span>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- ===== COUNTDOWN ===== -->
+  <div class="countdown-wrap" id="countdown">
+    <div class="countdown-label">Compte à rebours — BAC 2027</div>
+    <div class="countdown-blocks">
+      <div class="countdown-block">
+        <span class="countdown-num" id="cd-months">—</span>
+        <span class="countdown-unit">mois</span>
+      </div>
+      <div class="countdown-block">
+        <span class="countdown-num" id="cd-weeks">—</span>
+        <span class="countdown-unit">semaines</span>
+      </div>
+      <div class="countdown-block">
+        <span class="countdown-num" id="cd-days">—</span>
+        <span class="countdown-unit">jours</span>
+      </div>
+    </div>
+    <div class="countdown-date" id="cd-ref">jusqu'au ~ 15 juin 2027 (date estimée)</div>
+  </div>
+
+  <!-- ===== TOOL ===== -->
+  <main id="configurateur">
+
+    <!-- STEP 1: Date -->
+    <div class="card">
+      <div class="step-header">
+        <div class="step-num">1</div>
+        <div>
+          <div class="step-title">Date de ton BAC</div>
+          <div class="step-hint">Ajuste si la date officielle est publiée</div>
+        </div>
+      </div>
+      <div class="date-input-wrap">
+        <input type="date" id="bac-date" class="date-input" value="2027-06-15">
+        <span class="date-badge">Date estimée · <a href="https://www.education.gouv.fr" target="_blank" rel="noopener" style="color:#92400E">Confirme sur education.gouv.fr</a></span>
+      </div>
+    </div>
+
+    <!-- STEP 2: Subjects -->
+    <div class="card">
+      <div class="step-header">
+        <div class="step-num">2</div>
+        <div>
+          <div class="step-title">Tes matières</div>
+          <div class="step-hint">Clique pour ajouter · Indique ta difficulté (1 = facile, 5 = difficile)</div>
+        </div>
+      </div>
+
+      <div class="quick-section-label">Épreuves terminales obligatoires</div>
+      <div class="quick-add-grid">
+        <button class="quick-btn" onclick="addSubjectByName('Philosophie')">Philosophie</button>
+        <button class="quick-btn" onclick="addSubjectByName('Grand Oral')">Grand Oral</button>
+      </div>
+
+      <div class="quick-section-label">Spécialités (choisir 2 sur 12)</div>
+      <div class="quick-add-grid">
+        <button class="quick-btn" onclick="addSubjectByName('Maths')">Maths</button>
+        <button class="quick-btn" onclick="addSubjectByName('Physique-Chimie')">Physique-Chimie</button>
+        <button class="quick-btn" onclick="addSubjectByName('SVT')">SVT</button>
+        <button class="quick-btn" onclick="addSubjectByName('SES')">SES</button>
+        <button class="quick-btn" onclick="addSubjectByName('HGGSP')">HGGSP</button>
+        <button class="quick-btn" onclick="addSubjectByName('NSI')">NSI</button>
+        <button class="quick-btn" onclick="addSubjectByName('HLP')">HLP</button>
+        <button class="quick-btn" onclick="addSubjectByName('LLCER')">LLCER</button>
+        <button class="quick-btn" onclick="addSubjectByName('AMC (Arts)')">AMC (Arts)</button>
+        <button class="quick-btn" onclick="addSubjectByName('SI (Ingénieur)')">SI (Ingénieur)</button>
+      </div>
+
+      <div class="quick-section-label">Contrôle continu (coeff 40 au total)</div>
+      <div class="quick-add-grid">
+        <button class="quick-btn" onclick="addSubjectByName('Histoire-Géo')">Histoire-Géo</button>
+        <button class="quick-btn" onclick="addSubjectByName('Langues Vivantes')">Langues Vivantes</button>
+        <button class="quick-btn" onclick="addSubjectByName('Ens. Scientifique')">Ens. Scientifique</button>
+        <button class="quick-btn" onclick="addSubjectByName('EPS')">EPS</button>
+      </div>
+
+      <div class="custom-add">
+        <input type="text" id="custom-subject" class="custom-input" placeholder="Autre matière..." maxlength="30"
+               onkeydown="if(event.key==='Enter'){addCustomSubject()}">
+        <button class="add-btn" onclick="addCustomSubject()">+ Ajouter</button>
+      </div>
+
+      <div id="subjects-list">
+        <div class="no-subjects">Clique sur une matière ci-dessus pour commencer &#128071;</div>
+      </div>
+    </div>
+
+    <!-- STEP 3: Hours -->
+    <div class="card">
+      <div class="step-header">
+        <div class="step-num">3</div>
+        <div>
+          <div class="step-title">Ton temps disponible</div>
+          <div class="step-hint">En dehors des cours, en heures par jour</div>
+        </div>
+      </div>
+      <div class="hours-grid">
+        <div class="hours-item">
+          <label>Semaine (lun–ven) <span>h/jour</span></label>
+          <input type="number" id="weekday-hours" class="hours-input" value="1.5" min="0.5" max="8" step="0.5">
+        </div>
+        <div class="hours-item">
+          <label>Week-end <span>h/jour</span></label>
+          <input type="number" id="weekend-hours" class="hours-input" value="3" min="0.5" max="12" step="0.5">
+        </div>
+      </div>
+      <div class="hours-hint">
+        &#128161; Conseil : commence modeste (1h30/j) — il vaut mieux tenir sur la durée qu'exploser au bout de 2 semaines.
+      </div>
+    </div>
+
+    <!-- GENERATE -->
+    <div class="generate-wrap">
+      <button class="generate-btn" onclick="generatePlanning()">
+        Générer mon planning &#8594;
+      </button>
+    </div>
+
+  </main>
+
+  <!-- ===== RESULTS ===== -->
+  <section id="results">
+    <h2 class="results-title">Ton Planning Personnalisé</h2>
+    <p class="results-subtitle" id="results-subtitle">Généré le <span id="gen-date"></span></p>
+
+    <!-- Stats -->
+    <div class="stats-row" id="stats-row"></div>
+
+    <!-- Subject allocation -->
+    <div class="card">
+      <div class="alloc-title">Répartition du temps par matière</div>
+      <div id="alloc-bars"></div>
+    </div>
+
+    <!-- Phases -->
+    <div class="card">
+      <div class="alloc-title">Programme par phase</div>
+      <div class="phases-grid" id="phases-grid"></div>
+    </div>
+
+    <!-- Weekly rhythm -->
+    <div class="card">
+      <div class="week-tips" id="weekly-tips"></div>
+    </div>
+
+    <!-- Print -->
+    <div class="print-wrap">
+      <button class="print-btn" onclick="window.print()">
+        &#128438; Imprimer ce planning
+      </button>
+    </div>
+  </section>
+
+  <!-- ===== MATHS CTA ===== -->
+  <div class="maths-cta">
+    <h2>&#127919; Tu révises les Maths ?</h2>
+    <p>Des centaines de vidéos gratuites sur le programme BAC Terminale : fonctions, probabilités, suites, géométrie… Exercices corrigés, méthodes claires.</p>
+    <div class="cta-links">
+      <a href="https://www.youtube.com/@MathsAvecFred" target="_blank" rel="noopener" class="cta-link-primary">
+        Voir MathsAvecFred sur YouTube
+      </a>
+      <a href="https://itachiuchiha976.github.io/revise-maths-lycee/" target="_blank" rel="noopener" class="cta-link-secondary">
+        Exercices interactifs gratuits
+      </a>
+    </div>
+  </div>
+
+  <!-- ===== FAQ ===== -->
+  <div class="card faq-section">
+    <h2>Questions fréquentes sur les révisions BAC</h2>
+
+    <details class="faq-item">
+      <summary>Quand faut-il commencer à réviser pour le BAC 2027 ?</summary>
+      <p>Le meilleur moment pour démarrer est la rentrée de terminale, en septembre 2026. Cela laisse environ 9 mois de préparation progressive. Ne pas vouloir tout réviser d'un coup : une heure par jour dès septembre vaut infiniment mieux que des nuits blanches en mai. L'outil ci-dessus calcule automatiquement un rythme adapté à ta date de départ.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Comment organiser ses révisions pour le BAC ?</summary>
+      <p>La méthode en 3 phases est la plus efficace. Phase 1 (sept–jan) : revoir le cours de chaque matière, identifier les lacunes. Phase 2 (jan–avr) : pratiquer des exercices ciblés sur les points faibles, s'entraîner sur des annales. Phase 3 (avr–juin) : révisions globales, bacs blancs, travailler le timing et la gestion du stress. Cette approche progressive évite le bachotage de dernière minute.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Combien d'heures par semaine faut-il travailler pour le BAC ?</summary>
+      <p>En dehors des cours, 8 à 12 heures par semaine suffisent si elles sont régulières et bien réparties. Cela représente environ 1h30 par soir en semaine et 2-3h le week-end. L'important est la régularité : travailler 1h chaque jour est plus efficace que 8h le dimanche soir. Adapte selon tes matières prioritaires (celles avec les plus forts coefficients ou tes points faibles).</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Quelle matière réviser en priorité pour le BAC général ?</summary>
+      <p>Priorise par coefficient descendant : les 2 spécialités (coeff 16 chacune) méritent le plus de temps. Ensuite le Grand Oral (coeff 10), la Philosophie (coeff 8), et les matières de contrôle continu (coeff 40 au total — répartis sur toute l'année). Mais adapte aussi selon tes lacunes : une matière où tu as 15/20 a moins besoin de révisions qu'une où tu es à 9/20.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Comment utiliser cet outil de planification ?</summary>
+      <p>1. Sélectionne ta date de BAC (par défaut juin 2027, ajustable). 2. Ajoute tes matières et indique ta difficulté perçue (1 étoile = ça roule, 5 étoiles = point faible). 3. Renseigne tes heures disponibles par jour. 4. Clique sur "Générer mon planning". L'outil calcule automatiquement combien d'heures allouer à chaque matière sur 3 phases progressives.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Quelles sont les dates du BAC 2027 ?</summary>
+      <p>Les dates officielles du BAC 2027 ne sont pas encore publiées. Basé sur les sessions précédentes (BAC 2026 : philosophie le 15 juin, spécialités les 16-18 juin), on peut estimer que les épreuves 2027 auront lieu autour du 14-18 juin 2027. Consulte régulièrement education.gouv.fr pour les dates officielles. Notre outil utilise une date par défaut estimée que tu peux ajuster.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Quelle mention obtenir au BAC général 2027 ?</summary>
+      <p>Les mentions du BAC général sont : Passable (10–11,99/20), Assez Bien (12–13,99/20), Bien (14–15,99/20), Très Bien (16–17,99/20). Note : la moyenne est calculée sur 100 points (40 contrôle continu + 60 épreuves terminales). En cas d'échec à l'examen terminal, une session de rattrapage (oral de contrôle) est organisée pour les candidats entre 8 et 9,99/20.</p>
+    </details>
+  </div>
+
+</div><!-- /container -->
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <p>PlanBac &mdash; Planificateur de révisions gratuit &bull; Aucune inscription requise &bull; Données locales uniquement</p>
+  <p style="margin-top:6px">Cet outil est fourni à titre indicatif. Les dates du BAC 2027 sont des estimations. <a href="https://www.education.gouv.fr" target="_blank" rel="noopener">Consulte education.gouv.fr</a> pour les dates officielles.</p>
+</footer>
+
+<script>
+/* ===== DATA ===== */
+const SUBJECT_COLORS = {
+  'Philosophie':      '#A855F7',
+  'Grand Oral':       '#06B6D4',
+  'Maths':            '#6366F1',
+  'Physique-Chimie':  '#10B981',
+  'SVT':              '#84CC16',
+  'SES':              '#F59E0B',
+  'HGGSP':            '#8B5CF6',
+  'NSI':              '#0EA5E9',
+  'HLP':              '#F43F5E',
+  'LLCER':            '#EC4899',
+  'AMC (Arts)':       '#F97316',
+  'SI (Ingénieur)':   '#14B8A6',
+  'Histoire-Géo':     '#A78BFA',
+  'Langues Vivantes': '#34D399',
+  'Ens. Scientifique':'#FBBF24',
+  'EPS':              '#FB923C'
+};
+const FALLBACK_COLORS = ['#6366F1','#10B981','#F59E0B','#F97316','#EC4899','#06B6D4','#8B5CF6','#84CC16','#0EA5E9','#34D399','#A78BFA','#FB923C'];
+
+let subjects = [];
+let colorFallbackIdx = 0;
+
+/* ===== COUNTDOWN ===== */
+function updateCountdown() {
+  const bacDateInput = document.getElementById('bac-date');
+  const bacDate = new Date(bacDateInput.value || '2027-06-15');
+  const today = new Date();
+  today.setHours(0,0,0,0);
+  const diff = bacDate - today;
+  if (diff < 0) { document.getElementById('cd-days').textContent = '0'; return; }
+  const days = Math.ceil(diff / 86400000);
+  const weeks = Math.floor(days / 7);
+  const months = Math.floor(days / 30.44);
+  document.getElementById('cd-months').textContent = months;
+  document.getElementById('cd-weeks').textContent = weeks;
+  document.getElementById('cd-days').textContent = days;
+  const opts = { day:'numeric', month:'long', year:'numeric' };
+  document.getElementById('cd-ref').textContent = 'jusqu\'au ' + bacDate.toLocaleDateString('fr-FR', opts) + ' (date estimée)';
+}
+
+document.getElementById('bac-date').addEventListener('input', updateCountdown);
+updateCountdown();
+
+/* ===== SUBJECT MANAGEMENT ===== */
+function getSubjectColor(name) {
+  if (SUBJECT_COLORS[name]) return SUBJECT_COLORS[name];
+  return FALLBACK_COLORS[colorFallbackIdx++ % FALLBACK_COLORS.length];
+}
+
+function addSubjectByName(name) {
+  if (subjects.find(s => s.name === name)) return;
+  subjects.push({ id: Date.now() + Math.random(), name, difficulty: 3, color: getSubjectColor(name) });
+  renderSubjects();
+  updateQuickBtns();
+}
+
+function addCustomSubject() {
+  const input = document.getElementById('custom-subject');
+  const name = input.value.trim();
+  if (!name) return;
+  if (subjects.find(s => s.name.toLowerCase() === name.toLowerCase())) { input.value = ''; return; }
+  subjects.push({ id: Date.now() + Math.random(), name, difficulty: 3, color: getSubjectColor(name) });
+  input.value = '';
+  renderSubjects();
+  updateQuickBtns();
+}
+
+function setDifficulty(id, diff) {
+  const s = subjects.find(s => s.id === id);
+  if (s) { s.difficulty = diff; renderSubjects(); }
+}
+
+function removeSubject(id) {
+  subjects = subjects.filter(s => s.id !== id);
+  renderSubjects();
+  updateQuickBtns();
+}
+
+function updateQuickBtns() {
+  const addedNames = subjects.map(s => s.name);
+  document.querySelectorAll('.quick-btn').forEach(btn => {
+    const name = btn.textContent;
+    btn.classList.toggle('added', addedNames.includes(name));
+  });
+}
+
+function renderSubjects() {
+  const container = document.getElementById('subjects-list');
+  if (subjects.length === 0) {
+    container.innerHTML = '<div class="no-subjects">Clique sur une matière ci-dessus pour commencer &#128071;</div>';
+    return;
+  }
+  container.innerHTML = subjects.map(s => `
+    <div class="subject-card" style="border-left-color:${s.color}">
+      <div class="subject-dot" style="background:${s.color}"></div>
+      <span class="subject-name-label">${s.name}</span>
+      <span class="difficulty-label">Difficulté :</span>
+      <div class="stars-wrap">
+        ${[1,2,3,4,5].map(i => `
+          <span class="star${i <= s.difficulty ? ' filled' : ''}"
+                onclick="setDifficulty(${s.id}, ${i})"
+                title="Difficulté ${i}">&#9733;</span>
+        `).join('')}
+      </div>
+      <button class="remove-btn" onclick="removeSubject(${s.id})" title="Supprimer">&#215;</button>
+    </div>
+  `).join('');
+}
+
+/* ===== HELPERS ===== */
+function addDays(date, days) {
+  const d = new Date(date);
+  d.setDate(d.getDate() + days);
+  return d;
+}
+function formatDate(date) {
+  return date.toLocaleDateString('fr-FR', { day:'numeric', month:'short', year:'numeric' });
+}
+function formatDateShort(date) {
+  return date.toLocaleDateString('fr-FR', { day:'numeric', month:'short' });
+}
+function roundHalf(n) { return Math.round(n * 2) / 2; }
+
+/* ===== GENERATE ===== */
+function generatePlanning() {
+  if (subjects.length === 0) {
+    alert('Ajoute au moins une matière avant de générer ton planning !');
+    return;
+  }
+
+  const bacDateVal = document.getElementById('bac-date').value;
+  const bacDate = new Date(bacDateVal);
+  const today = new Date();
+  today.setHours(0,0,0,0);
+
+  if (bacDate <= today) {
+    alert('La date du BAC doit être dans le futur !');
+    return;
+  }
+
+  const weekdayH = parseFloat(document.getElementById('weekday-hours').value) || 1.5;
+  const weekendH = parseFloat(document.getElementById('weekend-hours').value) || 3;
+  const hoursPerWeek = weekdayH * 5 + weekendH * 2;
+
+  const msPerDay = 86400000;
+  const totalDays = Math.ceil((bacDate - today) / msPerDay);
+  const totalWeeks = Math.ceil(totalDays / 7);
+  const totalHours = Math.round(totalWeeks * hoursPerWeek);
+
+  if (totalWeeks < 2) { alert('Il te reste moins de 2 semaines — courage !'); return; }
+
+  /* Phase sizes */
+  const p1w = Math.max(1, Math.round(totalWeeks * 0.50));
+  const p2w = Math.max(1, Math.round(totalWeeks * 0.30));
+  const p3w = Math.max(1, totalWeeks - p1w - p2w);
+
+  const p1H = p1w * hoursPerWeek;
+  const p2H = p2w * hoursPerWeek;
+  const p3H = p3w * hoursPerWeek;
+
+  /* Allocation weights */
+  const totalDiff  = subjects.reduce((s, x) => s + x.difficulty, 0);
+  const totalDiff2 = subjects.reduce((s, x) => s + x.difficulty ** 2, 0);
+
+  function alloc(totalH, weights, weightSum) {
+    return subjects.map(sub => ({
+      ...sub,
+      weeklyH: roundHalf((weights[sub.id] / weightSum) * hoursPerWeek),
+      totalH:  Math.round((weights[sub.id] / weightSum) * totalH)
+    }));
+  }
+
+  const w1 = {}; const w2 = {}; const w3 = {};
+  subjects.forEach(s => {
+    w1[s.id] = s.difficulty;
+    w2[s.id] = s.difficulty ** 2;
+    w3[s.id] = 1;
+  });
+
+  const p1alloc = alloc(p1H, w1, totalDiff);
+  const p2alloc = alloc(p2H, w2, totalDiff2);
+  const p3alloc = alloc(p3H, w3, subjects.length);
+
+  /* Global totals */
+  const subjectTotals = subjects.map(sub => {
+    const h = (p1alloc.find(x=>x.id===sub.id)?.totalH||0)
+            + (p2alloc.find(x=>x.id===sub.id)?.totalH||0)
+            + (p3alloc.find(x=>x.id===sub.id)?.totalH||0);
+    return { ...sub, totalH: h };
+  });
+  subjectTotals.sort((a,b) => b.totalH - a.totalH);
+  const maxH = subjectTotals[0]?.totalH || 1;
+
+  /* Phase dates */
+  const p1start = new Date(today);
+  const p1end   = addDays(today, p1w * 7);
+  const p2start = new Date(p1end);
+  const p2end   = addDays(p2start, p2w * 7);
+  const p3start = new Date(p2end);
+  const p3end   = new Date(bacDate);
+
+  /* ===== RENDER ===== */
+  document.getElementById('gen-date').textContent = new Date().toLocaleDateString('fr-FR', {day:'numeric',month:'long',year:'numeric'});
+
+  /* Stats */
+  document.getElementById('stats-row').innerHTML = [
+    { num: totalWeeks, label: 'Semaines disponibles' },
+    { num: Math.round(hoursPerWeek * 10)/10 + 'h', label: 'Heures par semaine' },
+    { num: totalHours + 'h', label: 'Total de révision' },
+    { num: subjects.length, label: 'Matières' }
+  ].map(s => `
+    <div class="stat-card">
+      <div class="stat-num">${s.num}</div>
+      <div class="stat-label">${s.label}</div>
+    </div>
+  `).join('');
+
+  /* Allocation bars */
+  document.getElementById('alloc-bars').innerHTML = subjectTotals.map(s => `
+    <div class="alloc-bar-wrap">
+      <div class="alloc-bar-header">
+        <span class="alloc-bar-name" style="color:${s.color}">${s.name}</span>
+        <span class="alloc-bar-hours">${s.totalH}h (${Math.round(s.totalH/totalHours*100)}%)</span>
+      </div>
+      <div class="alloc-track">
+        <div class="alloc-fill" style="width:${Math.round(s.totalH/maxH*100)}%;background:${s.color}"></div>
+      </div>
+    </div>
+  `).join('');
+
+  /* Phase descriptions */
+  const phases = [
+    {
+      cls: 'p1',
+      emoji: '&#128215;',
+      label: 'Phase 1 — Fondations',
+      weeks: p1w,
+      totalH: Math.round(p1H),
+      desc: 'Revois le cours de chaque matière, identifie tes lacunes. Lecture active, fiches de synthèse, premières questions de cours.',
+      start: p1start,
+      end: p1end,
+      alloc: p1alloc,
+      extra: 'Objectif : tout le programme parcouru une première fois.'
+    },
+    {
+      cls: 'p2',
+      emoji: '&#128214;',
+      label: 'Phase 2 — Approfondissement',
+      weeks: p2w,
+      totalH: Math.round(p2H),
+      desc: 'Concentre le travail sur tes points faibles. Exercices ciblés, annales par chapitre, méthodes de dissertation et de démonstration.',
+      start: p2start,
+      end: p2end,
+      alloc: p2alloc,
+      extra: 'Les matières difficiles (5 étoiles) reçoivent plus de temps ici.'
+    },
+    {
+      cls: 'p3',
+      emoji: '&#128213;',
+      label: 'Phase 3 — Intensif &#38; Annales',
+      weeks: p3w,
+      totalH: Math.round(p3H),
+      desc: 'Bacs blancs complets, révisions globales, gestion du timing. Simule les conditions d\'examen. Soigne le Grand Oral.',
+      start: p3start,
+      end: p3end,
+      alloc: p3alloc,
+      extra: 'Objectif : 1 annale complète par semaine, correction minutieuse.'
+    }
+  ];
+
+  document.getElementById('phases-grid').innerHTML = phases.map(ph => `
+    <div class="phase-card ${ph.cls}">
+      <div class="phase-header">
+        <div class="phase-title"><span class="phase-emoji">${ph.emoji}</span>${ph.label}</div>
+        <div class="phase-meta">
+          <span class="phase-chip">${ph.weeks} sem.</span>
+          <span class="phase-chip">~${ph.totalH}h</span>
+        </div>
+      </div>
+      <div class="phase-dates">&#128197; ${formatDateShort(ph.start)} &rarr; ${formatDateShort(ph.end)}</div>
+      <div class="phase-desc">${ph.desc}</div>
+      <div class="phase-alloc-list">
+        ${ph.alloc.sort((a,b)=>b.weeklyH-a.weeklyH).map(s => `
+          <div class="phase-alloc-item">
+            <div class="phase-alloc-dot" style="background:${s.color}"></div>
+            <span class="phase-alloc-name">${s.name}</span>
+            <span class="phase-alloc-time">${s.weeklyH}h<span class="phase-alloc-sep">/</span>sem</span>
+          </div>
+        `).join('')}
+      </div>
+      <div style="font-size:0.78rem;margin-top:10px;opacity:0.7;font-style:italic">${ph.extra}</div>
+    </div>
+  `).join('');
+
+  /* Weekly tips */
+  document.getElementById('weekly-tips').innerHTML = `
+    <h3>&#128161; Rythme hebdomadaire recommandé</h3>
+    <div class="week-tip-item"><span class="week-tip-icon">&#128197;</span><span><strong>Lundi :</strong> Matière difficile (pleine concentration)</span></div>
+    <div class="week-tip-item"><span class="week-tip-icon">&#128197;</span><span><strong>Mardi–Mercredi :</strong> 2 matières distinctes (varier pour maintenir la concentration)</span></div>
+    <div class="week-tip-item"><span class="week-tip-icon">&#128197;</span><span><strong>Jeudi :</strong> Relecture et mémorisation active (flashcards, résumés à l'oral)</span></div>
+    <div class="week-tip-item"><span class="week-tip-icon">&#128197;</span><span><strong>Vendredi :</strong> Exercices d'application ou annale courte</span></div>
+    <div class="week-tip-item"><span class="week-tip-icon">&#128197;</span><span><strong>Week-end :</strong> Révisions longues, travail de fond, annales complètes (Phase 3)</span></div>
+    <div class="week-tip-item" style="margin-top:8px"><span class="week-tip-icon">&#9888;&#65039;</span><span><strong>Important :</strong> Prévois 1 demi-journée SANS révisions par semaine. La récupération fait partie du processus.</span></div>
+  `;
+
+  /* Show results */
+  const resultsEl = document.getElementById('results');
+  resultsEl.style.display = 'block';
+  resultsEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+</script>
+
+</body>
+</html>
